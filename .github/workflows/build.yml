@@ -20,5 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # THIS IS THE MISSING STEP: It sets up the Geode developer files in the cloud!
+      - name: Setup Geode CLI
+        uses: geode-sdk/cli/.github/actions/setup@main
+
       - name: Build Mod
         uses: geode-sdk/build-geode-mod@main
+
