@@ -12,7 +12,7 @@ jobs:
       matrix:
         config:
           - name: Windows
-            os: windows-latest
+            os: windows-2022
 
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
@@ -20,8 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Geode CLI
-        uses: geode-sdk/cli/.github/actions/setup@main
-
       - name: Build Mod
         uses: geode-sdk/build-geode-mod@main
+        with:
+          sdk: 'v5.7.1'
