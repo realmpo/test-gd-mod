@@ -1,10 +1,10 @@
 {
     "geode": "5.7.1",
     "id": "meowerpro.test_mod",
-    "version": "beta-1",
+    "version": "0.0.1",
     "name": "My test mod",
     "developer": "MeowerPro",
-    "description": "My test mod. Nothing else",
+    "description": "(BETA 1) My test mod. Nothing else",
     "api": {
         "platforms": ["win"]
     }
