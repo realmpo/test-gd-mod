@@ -24,6 +24,65 @@ using namespace geode::prelude;
  *
  * struct MyMenuLayer : Modify<MyMenuLayer, MenuLayer> {};
  */
+
+
+// Define a custom popup layer class
+class MyCustomPopup : public FLAlertLayer {
+protected:
+    bool init() {
+        // Initialize with default alert styling parameters
+        if (!FLAlertLayer::init(nullptr, "Custom Menu", "", "Close", nullptr, 300.f, false, 150.f, 1.f)) {
+            return false;
+        }
+
+        // 1. Find the main layer layout template container
+        auto layer = cocos2d::CCLayer::create();
+        this->addChild(layer);
+
+        // 2. Create a label/text description for inside your box
+        auto label = cocos2d::CCLabelBMFont::create("Click the special button below:", "bigFont.fnt");
+        label->setPosition({285, 180});
+        label->setScale(0.5f);
+        layer->addChild(label);
+
+        // 3. Create a custom button sprite using an in-game asset name
+        auto goldButtonSprite = ButtonSprite::create("Click Me!", "goldFont.fnt", "GJ_button_01.png");
+        
+        // 4. Bind the sprite to a clickable menu item action function
+        auto customButton = CCMenuItemSpriteExtra::create(
+            goldButtonSprite,
+            this,
+            menu_selector(MyCustomPopup::onCustomButtonClick)
+        );
+
+        // 5. Create a layout menu frame to hold your interactive controls
+        auto menu = cocos2d::CCMenu::create();
+        menu->addChild(customButton);
+        menu->setPosition({285, 140}); // Adjust coordinates to center the button in the window
+        layer->addChild(menu);
+
+        return true;
+    }
+
+    // This runs when your new custom button is clicked!
+    void onCustomButtonClick(cocos2d::CCObject* sender) {
+        // Create an interior confirmation alert
+        FLAlertLayer::create("Success!", "You clicked the custom button!", "Nice")->show();
+    }
+
+public:
+    // Helper helper constructor method
+    static MyCustomPopup* create() {
+        auto ret = new MyCustomPopup();
+        if (ret && ret->init()) {
+            ret->autorelease();
+            return ret;
+        }
+        CC_SAFE_DELETE(ret);
+        return nullptr;
+    }
+};
+
 #include <Geode/modify/MenuLayer.hpp>
 class $modify(MyMenuLayer, MenuLayer) {
 	/**
@@ -94,7 +153,11 @@ class $modify(MyMenuLayer, MenuLayer) {
 	 * The signature for button callbacks must always be the same,
 	 * return type `void` and taking a `CCObject*`.
 	*/
-	void onMyButton(CCObject*) {
-		FLAlertLayer::create("Geode", "Hello from my custom mod!", "OK")->show();
-	}
+	void onMyButton(CCObject* sender) {
+    // Create and show your newly constructed custom multi-button popup window!
+    auto popup = MyCustomPopup::create();
+    if (popup) {
+      popup->show();
+    }
+    }
 };
