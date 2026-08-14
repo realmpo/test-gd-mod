@@ -1,0 +1,11 @@
+[
+  {
+    "name": "w64devkit Portable MinGW",
+    "compilers": {
+      "C": "C:/Users/derek/Downloads/w64devkit/bin/gcc.exe",
+      "CXX": "C:/Users/derek/Downloads/w64devkit/bin/g++.exe"
+    },
+    "isTrusted": true,
+    "keep": true
+  }
+]
